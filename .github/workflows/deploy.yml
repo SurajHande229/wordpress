@@ -1,0 +1,44 @@
+name: SSH into Bastion and Application Server
+
+on:
+  push:
+    branches:
+      - main  # Trigger when code is pushed to the main branch (or customize as needed)
+
+jobs:
+  ssh:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Add your private key to GitHub secrets
+
+    - name: SSH into Bastion host and then main application server
+      run: |
+        # Set up Git authentication using the GitHub token
+          git config --global url."https://${{ secrets.PAT_TOKEN }}:@github.com".insteadOf "https://github.com"
+        # SSH into Bastion host (ec2-user)
+        ssh -o StrictHostKeyChecking=no -A ec2-user@${{ secrets.BASTION_HOST }} << 'EOF'
+          # Inside Bastion, SSH into the main application server (ubuntu)
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.MAIN_SERVER_HOST }} << 'END'
+            # Commands to run on the application server
+            echo "Successfully connected to the application server!"
+            # Step 3.1: Navigate to /var/www/html and remove the existing wordpress directory (if any)  
+            cd /var/www/html
+            rm -rf wordpress
+            # Step 3.2: Clone the latest version of the repo into /var/www/html/wordpress
+            git clone https://github.com/yourusername/your-repo.git wordpress
+            cp wp-config.php wordpress
+            cd wordpress
+            git pull origin main
+            # Step 3.3: Set appropriate permissions for the files and directories
+            sudo chown -R root:root /var/www/html/wordpress
+            # Step 3.4: Restart Nginx to apply changes
+            sudo systemctl restart nginx   
+          END
+        EOF
