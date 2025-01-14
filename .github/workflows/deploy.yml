@@ -33,13 +33,12 @@ jobs:
             cd /var/www/html
             rm -rf wordpress
             # Step 3.2: Clone the latest version of the repo into /var/www/html/wordpress
-            git clone https://SurajHande229:${{ secrets.GITHUB_TOKEN }}@github.com/SurajHande229/wordpress.git
+            git clone https://SurajHande229:${{ secrets.PAT_TOKEN }}@github.com/SurajHande229/wordpress.git
             cp wp-config.php wordpress
             cd wordpress
             git pull origin main
             # Step 3.3: Set appropriate permissions for the files and directories
             sudo chown -R root:root /var/www/html/wordpress
             # Step 3.4: Restart Nginx to apply changes
-            sudo systemctl restart nginx   
-          END
+            sudo systemctl restart nginx
         EOF
