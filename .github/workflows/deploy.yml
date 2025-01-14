@@ -33,7 +33,7 @@ jobs:
             cd /var/www/html
             rm -rf wordpress
             # Step 3.2: Clone the latest version of the repo into /var/www/html/wordpress
-            git clone https://github.com/yourusername/your-repo.git wordpress
+            git clone https://SurajHande229:${{ secrets.GITHUB_TOKEN }}@github.com/SurajHande229/wordpress.git
             cp wp-config.php wordpress
             cd wordpress
             git pull origin main
