@@ -29,6 +29,7 @@ jobs:
             # Commands to run on the application server
             echo "Successfully connected to the application server!"
             # Step 3.1: Navigate to /var/www/html and remove the existing wordpress directory (if any)  
+            sudo su
             cd /var/www/html
             rm -rf wordpress
             # Step 3.2: Clone the latest version of the repo into /var/www/html/wordpress
