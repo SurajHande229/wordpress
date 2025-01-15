@@ -14,5 +14,5 @@
                 # Permissions-Policy header
                 add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
 
-  #Content Security Policy
-                add_header Content-Security-Policy "default-src 'self'; script-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; frame-src 'self'; font-src 'self'; connect-src 'self' https://example.in/";
+                #Content Security Policy
+                add_header Content-Security-Policy "default-src 'self'; script-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; frame-src 'self'; font-src 'self'; connect-src 'self' https://mydomain.in/";
