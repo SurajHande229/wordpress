@@ -1,4 +1,6 @@
-# HSTS header (max-age: 1 year)
+  #Security Headers
+
+                # HSTS header (max-age: 1 year)
                 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
                 # X-Frame-Options header
