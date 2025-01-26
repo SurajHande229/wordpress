@@ -32,7 +32,9 @@ jobs:
             cd /var/www/html/wordpress
             # Step 3.2: Clone the latest version of the repo into /var/www/html/wordpres
             git pull origin main
-            # Step 3.3: Set appropriate permissions for the files and directories
-            # Step 3.4: Restart Nginx to apply changes
+            php_version=$(php -v | head -n 1 | awk '{print $2}' | cut -d '.' -f1,2)
+            # Now use the variable to restart the PHP service
+            sudo systemctl restart "php${php_version}-fpm"
+            # Step 3.3: Restart Nginx to apply changes
             sudo systemctl restart nginx
         EOF
